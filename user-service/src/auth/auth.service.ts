@@ -26,7 +26,9 @@ export class AuthService {
   }
 
   async registerUser(user: CreateUser): Promise<{ token: string }> {
-    const exitUser = await this.authRepo.findUser({ email: user.email });
+    const exitUser = await this.authRepo.findUser({
+      email: user.email.toLocaleLowerCase(),
+    });
 
     if (exitUser) {
       throw new ForbiddenException('User Already Registered');
@@ -35,6 +37,7 @@ export class AuthService {
     const hash = await argon.hash(user.password);
     const userCreated = await this.authRepo.createUser({
       ...user,
+      email: user.email.toLocaleLowerCase(),
       password: hash,
     });
 
@@ -47,7 +50,7 @@ export class AuthService {
     password: string;
   }): Promise<{ token: string }> {
     const user = await this.authRepo.findUser({
-      email: data.email,
+      email: data.email?.toLocaleLowerCase(),
       userName: data.userName,
     });
     if (!user) throw new ForbiddenException('Invalid Credentials');

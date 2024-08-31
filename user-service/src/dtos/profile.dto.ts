@@ -6,7 +6,6 @@ import {
   IsNumber,
   IsArray,
   IsUrl,
-  IsNotEmpty,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -41,52 +40,33 @@ export class UpdateProfileDto {
   @IsUrl()
   @IsOptional()
   imageUrl?: string | null;
-}
-
-export class ProfileDto {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-
-  @IsString()
-  @IsOptional()
-  displayName?: string | null;
-
-  @IsEnum(Gender)
-  @IsOptional()
-  gender?: Gender | null;
-
-  @IsDate()
-  @Type(() => Date)
-  @IsOptional()
-  birthday?: Date | null;
-
-  @IsNumber()
-  @IsOptional()
-  height?: number | null;
-
-  @IsNumber()
-  @IsOptional()
-  weight?: number | null;
-
-  @IsUrl()
-  @IsOptional()
-  imageUrl?: string | null;
 
   @IsArray()
   @IsString({ each: true })
-  interest: string[];
+  @IsOptional()
+  interest?: string[];
+}
 
-  @IsDate()
-  @Type(() => Date)
+export class ProfileDto {
+  id: string;
+
+  displayName?: string | null;
+
+  gender?: string | null;
+
+  birthday?: Date | null;
+
+  height?: number | null;
+
+  weight?: number | null;
+
+  imageUrl?: string | null;
+
+  interest?: string[];
+
   createdAt: Date;
 
-  @IsDate()
-  @Type(() => Date)
   updatedAt: Date;
 
-  @IsDate()
-  @Type(() => Date)
-  @IsOptional()
   deletedAt: Date | null;
 }
