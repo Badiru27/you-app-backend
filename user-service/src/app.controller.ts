@@ -27,7 +27,7 @@ export class AppController {
   @Get('/health')
   getHello() {
     return {
-      message: 'Hello You App 🚀🚀🚀',
+      message: 'Hello from User Service of You App 🚀🚀🚀',
     };
   }
 

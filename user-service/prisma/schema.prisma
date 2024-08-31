@@ -14,14 +14,16 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  email     String    @unique
-  userName  String    @unique
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  email     String     @unique
+  userName  String     @unique
   password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   deletedAt DateTime?
   Profile   Profile[]
+  Room      Room[]
+  UserRoom  UserRoom[]
 }
 
 model Profile {
@@ -44,4 +46,38 @@ enum Gender {
   MALE
   FEMALE
   OTHER
+}
+
+model Room {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  createdBy String     @db.ObjectId
+  messages  Message[]
+  user      User       @relation(fields: [createdBy], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+  UserRoom  UserRoom[]
+}
+
+model UserRoom {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  roomId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
+  room      Room      @relation(fields: [roomId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Message {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  roomId    String    @db.ObjectId
+  userId    String
+  content   String
+  room      Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
