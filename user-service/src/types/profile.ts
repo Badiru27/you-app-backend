@@ -1,8 +1,11 @@
 import { Profile as PrismaProfile } from '@prisma/client';
+import { User } from './user';
 
-export type Profile = PrismaProfile;
+export type Profile = PrismaProfile & { user?: User };
 
-export type UpdateProfile = Omit<
-  Profile,
-  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
->;
+export type UpdateProfile = Partial<
+  Omit<
+    Profile,
+    'id' | 'userId' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'user'
+  >
+> & { userId: string };

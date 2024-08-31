@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ProfileService } from './profile.service';
-import { Profile } from './profile.repository';
+import { ProfileRepo } from './profile.repository';
+import { DataModule } from 'src/data/data.module';
 
 @Module({
-  providers: [ProfileService, Profile],
+  imports: [DataModule],
+  providers: [ProfileService, ProfileRepo],
+  exports: [ProfileService],
 })
 export class ProfileModule {}
