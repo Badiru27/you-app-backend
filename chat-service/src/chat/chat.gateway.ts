@@ -13,7 +13,7 @@ import { Server, Socket } from 'socket.io';
 
 import { UseGuards } from '@nestjs/common';
 import { User } from 'src/types/user';
-import { WsGuard } from 'src/auth/guard/ws.guard';
+import { WsGuard } from '../auth/guard/ws.guard';
 
 @WebSocketGateway({
   cors: {
