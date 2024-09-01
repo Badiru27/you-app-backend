@@ -81,11 +81,6 @@ describe('ChatGateway', () => {
     expect(chatService).toBeDefined();
   });
 
-  it('should be defined', () => {
-    expect(gateway).toBeDefined();
-    expect(chatService).toBeDefined();
-  });
-
   describe('handleConnection', () => {
     it('should log client connection', () => {
       const consoleSpy = jest.spyOn(console, 'log');

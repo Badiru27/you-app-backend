@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/data/prisma.service';
-import { CreateUser, User } from 'src/types/user';
+import { PrismaService } from '../data/prisma.service';
+import { CreateUser, User } from '../types/user';
 
 @Injectable()
 export class AuthRepo {
@@ -23,6 +23,7 @@ export class AuthRepo {
   }
 
   async deleteUser(id: string): Promise<boolean> {
-    return !!(await this.dbService.user.delete({ where: { id } }));
+    const result = await this.dbService.user.delete({ where: { id } });
+    return !!result;
   }
 }
