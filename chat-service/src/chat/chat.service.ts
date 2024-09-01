@@ -24,7 +24,7 @@ export class ChatService {
     userId: string,
     message: string,
   ): Promise<string | null> {
-    const room = this.chatRepo.findRoom(roomId);
+    const room = await this.chatRepo.findRoom(roomId);
     if (room) {
       return this.chatRepo.createMessage({
         content: message,

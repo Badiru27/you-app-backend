@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MongoService } from 'src/data/mongo_db.service';
+import { MongoService } from '../data/mongo_db.service';
 import {
   ChatMessage,
   CreateMessage,
