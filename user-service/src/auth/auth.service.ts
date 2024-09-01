@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUser, User } from 'src/types/user';
 import { AuthRepo } from './auth.repository';
 import * as argon from 'argon2';
+import { ProfileService } from '../profile/profile.service';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +12,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private readonly authRepo: AuthRepo,
+    private readonly profileService: ProfileService,
   ) {}
 
   async assignUserAToken(user: User): Promise<{ token: string }> {
@@ -40,6 +42,8 @@ export class AuthService {
       email: user.email.toLocaleLowerCase(),
       password: hash,
     });
+
+    await this.profileService.create({ userId: userCreated.id });
 
     return this.assignUserAToken(userCreated);
   }

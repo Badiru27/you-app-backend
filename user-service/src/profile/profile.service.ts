@@ -31,8 +31,10 @@ export class ProfileService {
 
   async find(
     userId: string,
-  ): Promise<Profile & { zodiac: string; horoscope: string }> {
+  ): Promise<(Profile & { zodiac: string; horoscope: string }) | null> {
     const profile = await this.profileRepo.find(userId);
+
+    if (!profile) throw new NotFoundException('Profile not found');
     delete profile.user.password;
     const zodiac = profile.birthday
       ? this.getZodiacSign(profile.birthday)
@@ -64,7 +66,7 @@ export class ProfileService {
   }
 
   private getZodiacSign(birthDate: Date) {
-    const month = birthDate.getMonth();
+    const month = birthDate.getMonth() + 1;
     const day = birthDate.getDay();
 
     if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
