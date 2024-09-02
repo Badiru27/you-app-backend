@@ -40,10 +40,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else {
       const error = {
         statusCode: 500,
-        message: message,
+        message: 'Internal server error',
         time: new Date().toISOString(),
       };
-      console.error(error);
+      console.error({ ...error, message });
       response.status(500).json(error);
     }
   }
