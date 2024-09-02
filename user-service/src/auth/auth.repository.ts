@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../data/prisma.service';
 import { CreateUser, User } from '../types/user';
+import { removeNulls } from '@src/utils';
 
 @Injectable()
 export class AuthRepo {
@@ -17,8 +18,9 @@ export class AuthRepo {
     email?: string;
     userName?: string;
   }): Promise<User | null> {
+    const q = removeNulls(query);
     return this.dbService.user.findFirst({
-      where: query,
+      where: q,
     });
   }
 
